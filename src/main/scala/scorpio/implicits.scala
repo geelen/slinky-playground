@@ -1,0 +1,4 @@
+package scorpio
+
+object implicits {
+}
