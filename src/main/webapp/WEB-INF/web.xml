@@ -1,7 +1,7 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="2.5">
     <servlet>
         <servlet-name>slinky</servlet-name>
-        <servlet-class>wd.controllers.WorthDrinkingServlet</servlet-class>
+        <servlet-class>yabe.Yabe</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>slinky</servlet-name>

@@ -1,7 +1,7 @@
 package yabe
 
-import scorpio.App
+import scorpio.{GaeCheckLoggedIn, App}
 
 class Yabe extends App {
-  def stages = Seq()
+  def stages = Seq(GaeCheckLoggedIn)
 }
