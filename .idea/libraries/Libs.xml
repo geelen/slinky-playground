@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="file://$PROJECT_DIR$/lib" />
       <root url="file://$PROJECT_DIR$/project/boot/scala-2.8.0.Beta1-RC8/lib" />
+      <root url="file://$PROJECT_DIR$/lib_managed/scala_2.8.0.Beta1-RC8/compile" />
     </CLASSES>
     <JAVADOC>
       <root url="file://$PROJECT_DIR$/appengine/docs/javadoc" />
@@ -13,6 +14,7 @@
       <root url="jar://$PROJECT_DIR$/../scalaz-full_2.8.0.Beta1-RC8-5.0-SNAPSHOT/scalaz-http_2.8.0.Beta1-RC8-5.0-SNAPSHOT-sources.jar!/" />
     </SOURCES>
     <jarDirectory url="file://$PROJECT_DIR$/lib" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lib_managed/scala_2.8.0.Beta1-RC8/compile" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/project/boot/scala-2.8.0.Beta1-RC8/lib" recursive="false" />
   </library>
 </component>
