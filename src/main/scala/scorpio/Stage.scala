@@ -15,25 +15,25 @@ trait Stage extends Function[Request[Stream], Either[Request[Stream], Response[S
 
 trait RequestMangler extends Function[Request[Stream], Request[Stream]] {
   implicit def RequestManglerStage(rm: RequestMangler) = new Stage {
-    def apply(v1: Request[Stream]) = Left(rm.apply(v1))
+    def apply(request: Request[Stream]) = Left(rm.apply(request))
   }
 }
 
 trait Terminator extends Function[Request[Stream], Response[Stream]] {
   implicit def TerminatorStage(t: Terminator) = new Stage {
-    def apply(v1: Request[Stream]) = Right(t.apply(v1))
+    def apply(request: Request[Stream]) = Right(t.apply(request))
   }
 }
 
 trait MaybeHandler extends Function[Request[Stream], Option[Response[Stream]]] {
   implicit def MaybeStage(ms: MaybeHandler) = new Stage {
-    def apply(v1: Request[Stream]) = ms.apply(v1).toRight(v1)
+    def apply(request: Request[Stream]) = ms.apply(request).toRight(request)
   }
 }
 
 object FourOhFour extends Terminator {
-  def apply(v1: Request[Stream]) = {
-    implicit val r = v1
+  def apply(request: Request[Stream]) = {
+    implicit val r = request
     NotFound.xhtml
   }
 }
