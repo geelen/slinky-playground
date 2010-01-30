@@ -1,9 +1,9 @@
 package scorpio
 
 import _root_.scalaz.http.request.Request
-import _root_.scalaz.http.response.Response
 import _root_.scalaz.http.servlet.{HttpServletRequest, HttpServlet}
 import scapps.ServletApplicationServlet
+import scalaz.http.response.{NotFound, Response}
 
 abstract class App extends ServletApplicationServlet[Stream, Stream] {
   def stages: Seq[Stage]

@@ -37,3 +37,16 @@ object FourOhFour extends Terminator {
     NotFound.xhtml
   }
 }
+
+// can't get this going :(
+//
+//object ReturnStatus {
+//  import Terminator._
+//
+//  def of(s: Status): Stage = new Terminator {
+//    def apply(request: Request[Stream]) = {
+//      implicit val r = request
+//      s.xhtml
+//    }
+//  }
+//}
