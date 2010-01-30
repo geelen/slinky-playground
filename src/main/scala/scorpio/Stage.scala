@@ -9,6 +9,7 @@ import scalaz.http.Slinky._
 import scalaz.http.response._
 import scalaz.http.response.Response._
 import collection.immutable.Stream
+import scalaz.Semigroup
 
 trait Stage extends Function[Request[Stream], Either[Request[Stream], Response[Stream]]]
 
