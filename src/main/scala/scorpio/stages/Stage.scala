@@ -1,4 +1,4 @@
-package scorpio
+package scorpio.stages
 
 import scalaz.Scalaz._
 import scalaz.http.request._
@@ -13,21 +13,17 @@ import scalaz.Semigroup
 
 trait Stage extends Function[Request[Stream], Either[Request[Stream], Response[Stream]]]
 
-trait RequestMangler extends Function[Request[Stream], Request[Stream]] {
-  implicit def RequestManglerStage(rm: RequestMangler) = new Stage {
-    def apply(request: Request[Stream]) = Left(rm.apply(request))
-  }
-}
+trait RequestMangler extends Function[Request[Stream], Request[Stream]]
 
 trait Terminator extends Function[Request[Stream], Response[Stream]] {
-  implicit def TerminatorStage(t: Terminator) = new Stage {
-    def apply(request: Request[Stream]) = Right(t.apply(request))
+  implicit def toStage = new Stage {
+    def apply(request: Request[Stream]) = Right(Terminator.this.apply(request))
   }
 }
 
 trait MaybeHandler extends Function[Request[Stream], Option[Response[Stream]]] {
-  implicit def MaybeStage(ms: MaybeHandler) = new Stage {
-    def apply(request: Request[Stream]) = ms.apply(request).toRight(request)
+  implicit def toStage = new Stage {
+    def apply(request: Request[Stream]) = MaybeHandler.this.apply(request).toRight(request)
   }
 }
 

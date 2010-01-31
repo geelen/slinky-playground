@@ -1,4 +1,4 @@
-package scorpio
+package scorpio.stages
 
 import scalaz.http.request.Request
 import scalaz.http.response.Response

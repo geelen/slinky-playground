@@ -1,7 +1,12 @@
 package yabe
 
-import scorpio.{GaeCheckLoggedIn, App}
+import scorpio.routes.RoutingStage
+import scorpio.routes._
+import controllers._
+import scorpio.stages._
+import scorpio.App
 
 class Yabe extends App {
-  def stages = Seq(GaeCheckLoggedIn)
+  //why??
+  def stages = Seq(GaeCheckLoggedIn.toStage, Root(MainController).toStage)
 }
