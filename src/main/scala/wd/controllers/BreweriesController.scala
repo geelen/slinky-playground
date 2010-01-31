@@ -15,11 +15,17 @@ import com.google.appengine.api.datastore._
 import wd.views.breweries
 import wd.Brewery._
 
-class BreweriesController(val ds: DatastoreService)(implicit val request: Request[Stream]) extends Controller with ControllerHelpers {
+object BreweriesController extends Controller with ControllerHelpers {
+  import scapps.R._
+  import Services._
+  
+  def ds = datastoreService
   
   def find(key: Long): Option[Keyed[Brewery]] = ds.findById[Brewery](key)
   
-  def handle(v: Action[String]): Option[Response[Stream]] = (v map ((_:String).toLong)) ↦ (find _) >>= (handleB _)
+  def lookup(v: Action[String]): Option[Action[Keyed[Brewery]]] = (v map ((_:String).toLong)) ↦ (find _)
+  
+  def handle(v: Action[String]): Option[Response[Stream]] = lookup(v) >>= (handleB _)
   
   def handleB(v: Action[Keyed[Brewery]]): Option[Response[Stream]] = v match {
     case New => render(breweries.nu()) η
@@ -37,14 +43,14 @@ class BreweriesController(val ds: DatastoreService)(implicit val request: Reques
       
       saved fold ({errors => 
         render(breweries.nu(errors.list))
-      }, _ => redirectTo("/"))
+      }, _ => request.redirectTo("/"))
     } η
 
     case Update(brewery) => {
         val (errors, updated) = request.update(brewery.value)
         val newKeyed = Keyed(updated, brewery.key)
         errors match {
-          case Nil => redirectTo(newKeyed.save(ds))
+          case Nil => request.redirectTo(newKeyed.save(ds))
           case (_ :: _) => render(breweries.edit(newKeyed, errors))
         }
     } η

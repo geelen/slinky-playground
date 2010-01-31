@@ -13,7 +13,11 @@ import gae._
 import wd.Beer._
 import com.google.appengine.api.datastore.DatastoreService
 
-class BeersController(val ds: DatastoreService)(implicit val request: Request[Stream]) extends Controller with ControllerHelpers {
+object BeersController extends Controller with ControllerHelpers {
+  import scapps.R._
+  import Services._
+  
+  def ds = datastoreService
   
   def handle(v: Action[String]) = v match {
     case New => Some {
@@ -34,7 +38,7 @@ class BeersController(val ds: DatastoreService)(implicit val request: Request[St
       val br = ds.findById[Brewery](breweryKey).toSuccess(("brewery" -> "Unknown brewery").wrapNel)
       val persisted = (readB <|*|> br) map { case (beer, brk) => {
         val inserted = beer.insertWithParent(brk.key, ds)
-        redirectTo(brk.rr.show)
+        request.redirectTo(brk)
       }}
 
       persisted fold ({errors => 
