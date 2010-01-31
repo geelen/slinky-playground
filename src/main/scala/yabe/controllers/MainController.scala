@@ -1,6 +1,6 @@
 package yabe.controllers
 
-import scorpio.controllers.Controller
+import scorpio.controllers.{INDEX, Controller}
 
 object MainController extends Controller {
   INDEX {

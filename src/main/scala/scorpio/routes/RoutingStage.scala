@@ -1,9 +1,10 @@
 package scorpio.routes
 
-import scorpio.{MaybeHandler, Stage}
 import collection.immutable.Stream
 import scalaz.http.request.Request
 import scalaz.http.response.Response
+import scorpio.stages.MaybeHandler
+import scorpio.controllers.INDEX
 
 trait RoutingStage extends MaybeHandler {
   def routes: List[Route]
@@ -12,7 +13,8 @@ trait RoutingStage extends MaybeHandler {
 
   private def go(v1: Request[Stream], rs: List[Route]): Option[Response[Stream]] = rs match {
     case Nil => None
-    case r :: rest => if (r.matches(v1.path.mkString)) r.controller()
+    //todo: fix
+    case r :: rest => if (r.matches(v1.path.list.mkString)) r.controller.go(INDEX) else go(v1, rest)
   }
 }
 
